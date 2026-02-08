@@ -12,7 +12,7 @@
 [Quick Start](#-quick-start) •
 [Features](#-features) •
 [Configuration](#%EF%B8%8F-configuration) •
-[Documentation](#-documentation) •
+[Documentation](#-documentation) • 
 [Contributing](#-contributing)
 
 </div>

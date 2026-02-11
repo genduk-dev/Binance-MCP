@@ -596,3 +596,78 @@ artificial general intelligence agent, AGI agent, narrow AI agent, weak AI agent
 *Last Updated: January 29, 2026*
 </details>
 
+
+---
+
+## 🌐 Live HTTP Deployment
+
+**Binance MCP** is deployed and accessible over HTTP via [MCP Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) transport — no local installation required.
+
+**Endpoint:**
+```
+https://modelcontextprotocol.name/mcp/binance-mcp
+```
+
+### Connect from any MCP Client
+
+Add to your MCP client configuration (Claude Desktop, Cursor, SperaxOS, etc.):
+
+```json
+{
+  "mcpServers": {
+    "binance-mcp": {
+      "type": "http",
+      "url": "https://modelcontextprotocol.name/mcp/binance-mcp"
+    }
+  }
+}
+```
+
+### Available Tools (6)
+
+| Tool | Description |
+|------|-------------|
+| `get_ticker_price` | Get trading pair price |
+| `get_24h_stats` | 24h statistics |
+| `get_order_book` | Order book depth |
+| `get_recent_trades` | Recent trades |
+| `get_klines` | Candlestick data |
+| `list_all_symbols` | List trading pairs |
+
+### Example Requests
+
+**Get trading pair price:**
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/binance-mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_ticker_price","arguments":{"symbol":"BTCUSDT"}}}'
+```
+
+**24h statistics:**
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/binance-mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_24h_stats","arguments":{"symbol":"ETHUSDT"}}}'
+```
+
+**Order book depth:**
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/binance-mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"get_order_book","arguments":{"symbol":"BTCUSDT","limit":5}}}'
+```
+
+### List All Tools
+
+```bash
+curl -X POST https://modelcontextprotocol.name/mcp/binance-mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+### Also Available On
+
+- **[SperaxOS](https://speraxos.vercel.app)** — Browse and install from the [MCP marketplace](https://speraxos.vercel.app/community/mcp)
+- **All 27 MCP servers** — See the full catalog at [modelcontextprotocol.name](https://modelcontextprotocol.name)
+
+> Powered by [modelcontextprotocol.name](https://modelcontextprotocol.name) — the open MCP HTTP gateway

@@ -1,72 +1,55 @@
 // src/binance.ts
 // Central registration file for all Binance modules
+// Genduk fork: stripped down to essential modules only (spot trading + simple earn + market data + account info)
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 
-// Import module registration functions
+// Import module registration functions — KEEP ONLY ESSENTIAL MODULES
 import { registerBinanceSpotTools } from "./modules/spot/index.js"
-import { registerBinanceAlgoTools } from "./modules/algo/index.js"
 import { registerBinanceSimpleEarnTools } from "./modules/simple-earn/index.js"
-import { registerBinanceC2CTradeHistoryTools } from "./modules/c2c/index.js"
-import { registerBinanceConvertTools } from "./modules/convert/index.js"
-import { registerBinanceWalletTools } from "./modules/wallet/index.js"
-import { registerBinanceCopyTradingTools } from "./modules/copy-trading/index.js"
-import { registerBinanceFiatDepositWithdrawHistoryTools } from "./modules/fiat/index.js"
-import { registerBinanceNFTTools } from "./modules/nft/index.js"
-import { registerBinancePayTools } from "./modules/pay/index.js"
-import { registerBinanceRebateTools } from "./modules/rebate/index.js"
-import { registerBinanceDualInvestmentTools } from "./modules/dual-investment/index.js"
-import { registerBinanceMiningTools } from "./modules/mining/index.js"
-import { registerBinanceVipLoanTools } from "./modules/vip-loan/index.js"
-import { registerBinanceStakingTools } from "./modules/staking/index.js"
-import { registerPortfolioMargin } from "./modules/portfolio-margin/index.js"
-import { registerGiftCard } from "./modules/gift-card/index.js"
-import { registerSubAccount } from "./modules/sub-account/index.js"
 
-// NOTE: The following modules are disabled due to missing/incompatible npm packages:
-// - Margin (@binance/margin doesn't exist, needs refactoring to use connector-typescript)
+// REMOVED MODULES (see CHANGES.md for full list):
+// - algo (TWAP/algo trading)
+// - c2c (C2C/P2P trading)
+// - convert
+// - copy-trading
+// - dual-investment
+// - fiat (fiat deposit/withdraw)
+// - gift-card
+// - mining
+// - nft
+// - pay (Binance Pay)
+// - portfolio-margin
+// - rebate
+// - staking (use simple-earn instead)
+// - sub-account
+// - vip-loan
+// - wallet (withdrawals/deposits — HIGH RISK, removed intentionally)
+
+// NOTE: The following modules were already disabled upstream due to missing/incompatible npm packages:
+// - Margin (@binance/margin doesn't exist)
 // - Options (@binance/options doesn't exist)
-// - Auto-Invest (API methods don't match current @binance/auto-invest SDK)
-// - Crypto Loans (API methods don't match current @binance/crypto-loan SDK)
-// - Futures USD-M (@binance/futures doesn't exist)
-// - Futures COIN-M (@binance/futures doesn't exist)
+// - Auto-Invest (API methods mismatch)
+// - Crypto Loans (API methods mismatch)
+// - Futures USD-M / COIN-M (@binance/futures doesn't exist)
 
 /**
- * Register all Binance modules with the MCP server
+ * Register essential Binance modules with the MCP server.
+ *
+ * Scope: market data, account info, spot trading, simple earn.
+ *
+ * NOTE: Trade confirmation (buy/sell) is handled at the Genduk integration layer,
+ * NOT inside this MCP server. The MCP server exposes raw Binance API calls.
+ * Genduk will intercept spot order placement tools and require explicit owner
+ * confirmation before executing. Do not add confirmation logic here.
  */
 export function registerBinance(server: McpServer) {
-  // Core trading modules
+  // Spot trading: market data, trade API, account API, general API
+  // Includes: place order, cancel order, get order, open orders, trade history,
+  //           price ticker, order book, klines/candlesticks, account balance
   registerBinanceSpotTools(server)
-  registerBinanceAlgoTools(server)
-  
-  // Earn & Investment modules
+
+  // Simple Earn: flexible product list, positions, subscribe, redeem
   registerBinanceSimpleEarnTools(server)
-  registerBinanceDualInvestmentTools(server)
-  registerBinanceStakingTools(server)
-  
-  // Trading modules
-  registerBinanceC2CTradeHistoryTools(server)
-  registerBinanceConvertTools(server)
-  registerBinanceCopyTradingTools(server)
-  
-  // Wallet & Finance modules
-  registerBinanceWalletTools(server)
-  registerBinanceFiatDepositWithdrawHistoryTools(server)
-  registerBinanceVipLoanTools(server)
-  
-  // Portfolio Margin module
-  registerPortfolioMargin(server)
-  
-  // Gift Card module
-  registerGiftCard(server)
-  
-  // Sub-Account Management module
-  registerSubAccount(server)
-  
-  // Other modules
-  registerBinanceNFTTools(server)
-  registerBinancePayTools(server)
-  registerBinanceRebateTools(server)
-  registerBinanceMiningTools(server)
 }
 

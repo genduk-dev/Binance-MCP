@@ -11,7 +11,8 @@ import { registerSimpleEarnSubscribeFlexible } from "./subscribeFlexible.js";
 import { registerSimpleEarnRedeemFlexible } from "./redeemFlexible.js";
 import { registerSimpleEarnFlexiblePosition } from "./getFlexiblePosition.js";
 import { registerSimpleEarnFlexibleSubscriptionPreview } from "./getFlexibleSubscriptionPreview.js";
-import { registerSimpleEarnFlexibleRateHistory } from "./getRateHistory.js";
+// Genduk: disabled — SDK type mismatch (getFlexibleRateHistory doesn't exist on RestAPI)
+// import { registerSimpleEarnFlexibleRateHistory } from "./getRateHistory.js";
 import { registerSimpleEarnFlexibleSubscriptionRecord } from "./getSubscriptionRecord.js";
 import { registerSimpleEarnFlexibleRedemptionRecord } from "./getRedemptionRecord.js";
 
@@ -21,7 +22,7 @@ export function registerSimpleEarnFlexibleTools(server: McpServer) {
     registerSimpleEarnRedeemFlexible(server);
     registerSimpleEarnFlexiblePosition(server);
     registerSimpleEarnFlexibleSubscriptionPreview(server);
-    registerSimpleEarnFlexibleRateHistory(server);
+    // registerSimpleEarnFlexibleRateHistory(server);
     registerSimpleEarnFlexibleSubscriptionRecord(server);
     registerSimpleEarnFlexibleRedemptionRecord(server);
 }

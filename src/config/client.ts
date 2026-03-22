@@ -1,16 +1,7 @@
-import { Algo } from '@binance/algo';
+// src/config/client.ts
+// Genduk fork: algo removed, credentials from shared loader
 import { Spot } from '@binance/connector-typescript';
-
-const API_KEY = process.env.BINANCE_API_KEY;
-const API_SECRET = process.env.BINANCE_API_SECRET;
+import { API_KEY, API_SECRET } from './credentials.js';
 const BASE_URL = 'https://api.binance.com';
 
 export const spotClient = new Spot(API_KEY, API_SECRET, { baseURL: BASE_URL });
-export const algoClient = new Algo({
-    configurationRestAPI: {
-        apiKey: API_KEY ?? '',
-        apiSecret: API_SECRET ?? '',
-        basePath: BASE_URL,
-    }
-});
-

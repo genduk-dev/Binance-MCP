@@ -3,25 +3,26 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerBinanceMarketApiTools } from "./market-api/index.js";
 import { registerBinanceTradeApiTools } from "./trade-api/index.js";
 import { registerBinanceAccountApiTools } from "./account-api/index.js";
-import { registerBinanceUserDataStreamApiTools } from "./userdatastream-api/index.js";
+// Genduk: disabled — SDK type mismatch for userDataStream methods
+// import { registerBinanceUserDataStreamApiTools } from "./userdatastream-api/index.js";
 import { registerBinanceGeneralApiTools } from "./general-api/index.js";
 
 export function registerBinanceSpotTools(server: McpServer) {
     // Trade API tools
     registerBinanceTradeApiTools(server);
-    
+
     // Market API tools
     registerBinanceMarketApiTools(server);
-    
+
     // Account API tools
     registerBinanceAccountApiTools(server);
-    
-    // User Data Stream API tools
-    registerBinanceUserDataStreamApiTools(server);
-    
+
+    // User Data Stream API tools — disabled (SDK type mismatch)
+    // registerBinanceUserDataStreamApiTools(server);
+
     // General API tools
     registerBinanceGeneralApiTools(server);
-    
+
 }
 
 // Alias for binance.ts compatibility
